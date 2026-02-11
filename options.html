@@ -8,11 +8,31 @@
       body { font-family: system-ui, sans-serif; margin: 24px; max-width: 760px; }
       button { margin-right: 8px; padding: 8px 12px; }
       pre { background: #f4f4f4; padding: 12px; max-height: 300px; overflow: auto; }
+      .timing { display: grid; gap: 8px; max-width: 320px; margin-bottom: 16px; }
+      label { display: grid; gap: 4px; font-size: 14px; }
+      input[type="number"] { padding: 8px; font-size: 14px; }
+      .status { min-height: 20px; }
     </style>
   </head>
   <body>
     <h1>EveryHour Settings</h1>
-    <p>Export your check-in log for AI summaries, invoicing, or reporting.</p>
+    <p>Set reminder timing and export your check-in log for AI summaries, invoicing, or reporting.</p>
+
+    <section class="timing">
+      <label>
+        Popup every (minutes)
+        <input id="intervalInput" type="number" min="1" max="180" step="1" />
+      </label>
+      <label>
+        Minute point in hour (0-59)
+        <input id="minuteOffsetInput" type="number" min="0" max="59" step="1" />
+      </label>
+      <div>
+        <button id="saveTiming">Save timing</button>
+      </div>
+      <p id="timingStatus" class="status"></p>
+    </section>
+
     <button id="exportJson">Export JSON</button>
     <button id="clearHistory">Clear History</button>
     <p id="status"></p>

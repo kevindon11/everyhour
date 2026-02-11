@@ -17,12 +17,14 @@
     <nav class="tabs">
       <button class="tab active" data-tab="logs">Logs</button>
       <button class="tab" data-tab="timeline">Timeline</button>
+      <button class="tab" data-tab="settings">Settings</button>
     </nav>
 
     <section id="logsPanel" class="panel active">
       <div class="formCard">
         <h2>What you're working on?</h2>
         <textarea id="taskInput" rows="3" placeholder="bend2-ts: igualdade; vibe-coding ui for mvp"></textarea>
+        <p class="hint">Press Enter to send · Shift+Enter for new line</p>
         <div class="actions">
           <button id="sameBtn" class="ghost">Still same</button>
           <button id="submitBtn" class="solid">Send</button>
@@ -37,6 +39,25 @@
     <section id="timelinePanel" class="panel">
       <div class="timelineHeader">Daily activity blocks</div>
       <div id="timelineRows" class="timelineRows"></div>
+    </section>
+
+    <section id="settingsPanel" class="panel">
+      <div class="formCard">
+        <h2>Reminder timing</h2>
+        <label class="settingField">
+          Popup every (minutes)
+          <input id="intervalInput" type="number" min="1" max="180" step="1" />
+        </label>
+        <label class="settingField">
+          Minute point in hour (0-59)
+          <input id="minuteOffsetInput" type="number" min="0" max="59" step="1" />
+        </label>
+        <p class="hint">After each check-in, the next popup is scheduled X minutes later.</p>
+        <div class="actions">
+          <button id="saveSettingsBtn" class="solid">Save timing</button>
+        </div>
+      </div>
+      <p id="settingsStatus" role="status" aria-live="polite"></p>
     </section>
 
     <script src="popup.js"></script>
