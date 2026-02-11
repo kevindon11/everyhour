@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EveryHour Settings</title>
+    <style>
+      body { font-family: system-ui, sans-serif; margin: 24px; max-width: 760px; }
+      .row { margin-bottom: 12px; }
+      label { display: block; margin-bottom: 6px; font-weight: 600; }
+      input { width: 180px; padding: 6px; }
+      button { margin-right: 8px; padding: 8px 12px; }
+      pre { background: #f4f4f4; padding: 12px; max-height: 300px; overflow: auto; }
+      .hint { color: #555; font-size: 13px; margin-top: 2px; }
+    </style>
+  </head>
+  <body>
+    <h1>EveryHour Settings</h1>
+
+    <div class="row">
+      <label for="intervalMinutes">Reminder interval (X minutes)</label>
+      <input id="intervalMinutes" type="number" min="1" max="720" step="1" />
+      <div class="hint">Notifications repeat every X minutes, and after each check-in the next prompt is rescheduled to X minutes later.</div>
+    </div>
+
+    <div class="row">
+      <label for="minuteOffset">Preferred minute-of-hour (0-59)</label>
+      <input id="minuteOffset" type="number" min="0" max="59" step="1" />
+      <div class="hint">Used when the alarm schedule is anchored from settings/startup (example: 15 means HH:15).</div>
+    </div>
+
+    <div class="row">
+      <button id="saveSettings">Save Settings</button>
+      <button id="exportJson">Export JSON</button>
+      <button id="clearHistory">Clear History</button>
+    </div>
+
+    <p id="status"></p>
+    <pre id="preview"></pre>
+
+    <script src="options.js"></script>
+  </body>
+</html>

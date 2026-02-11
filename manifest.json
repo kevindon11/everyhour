@@ -1,0 +1,21 @@
+{
+  "manifest_version": 3,
+  "name": "EveryHour Check-In",
+  "description": "Personal hourly check-in extension inspired by Victor Taelin's post.",
+  "version": "0.1.0",
+  "permissions": [
+    "storage",
+    "alarms",
+    "notifications"
+  ],
+  "host_permissions": [],
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "action": {
+    "default_title": "EveryHour Check-In",
+    "default_popup": "popup.html"
+  },
+  "options_page": "options.html"
+}
