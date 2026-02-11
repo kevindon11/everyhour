@@ -1,0 +1,12 @@
+* text=auto eol=lf
+
+# Keep extension source clearly text-based for diffs/merges
+*.js text
+*.json text
+*.html text
+*.css text
+*.md text
+*.svg text
+
+# Git metadata/notes
+*.log text
