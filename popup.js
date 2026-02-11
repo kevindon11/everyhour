@@ -5,12 +5,36 @@ const statusEl = document.getElementById("status");
 const logListEl = document.getElementById("logList");
 const timelineRowsEl = document.getElementById("timelineRows");
 const workedTodayEl = document.getElementById("workedToday");
+const intervalInput = document.getElementById("intervalInput");
+const minuteOffsetInput = document.getElementById("minuteOffsetInput");
+const saveSettingsBtn = document.getElementById("saveSettingsBtn");
+const settingsStatusEl = document.getElementById("settingsStatus");
 
 const hasChromeApi = typeof chrome !== "undefined" && !!chrome.runtime?.id;
+
+function clampSettings(raw = {}) {
+  const intervalRaw = Number(raw.intervalMinutes);
+  const minuteOffsetRaw = Number(raw.minuteOffset);
+
+  const intervalMinutes = Number.isFinite(intervalRaw)
+    ? Math.min(180, Math.max(1, Math.round(intervalRaw)))
+    : 60;
+
+  const minuteOffset = Number.isFinite(minuteOffsetRaw)
+    ? Math.min(59, Math.max(0, Math.round(minuteOffsetRaw)))
+    : 0;
+
+  return { intervalMinutes, minuteOffset };
+}
 
 function setStatus(text, isError = false) {
   statusEl.textContent = text;
   statusEl.style.color = isError ? "#a12626" : "#2f8a47";
+}
+
+function setSettingsStatus(text, isError = false) {
+  settingsStatusEl.textContent = text;
+  settingsStatusEl.style.color = isError ? "#a12626" : "#2f8a47";
 }
 
 function formatTime(iso) {
@@ -71,6 +95,7 @@ async function getState() {
     const now = Date.now();
     return {
       ok: true,
+      settings: { intervalMinutes: 60, minuteOffset: 0 },
       history: [
         { timestamp: new Date(now - 3600_000).toISOString(), task: "initial prototype", unchanged: false },
         { timestamp: new Date(now).toISOString(), task: "extension UI pass", unchanged: false }
@@ -78,8 +103,21 @@ async function getState() {
     };
   }
 
-  const state = await chrome.storage.local.get(["checkinHistory", "currentTask"]);
-  return { ok: true, history: state.checkinHistory || [], currentTask: state.currentTask || "" };
+  const state = await chrome.runtime.sendMessage({ type: "get-state" });
+  if (!state?.ok) return { ok: false };
+
+  const data = await chrome.storage.local.get(["checkinHistory"]);
+  return {
+    ok: true,
+    history: data.checkinHistory || [],
+    currentTask: state.currentTask || "",
+    settings: clampSettings(state.settings)
+  };
+}
+
+function renderSettings(settings) {
+  intervalInput.value = settings.intervalMinutes;
+  minuteOffsetInput.value = settings.minuteOffset;
 }
 
 async function refresh() {
@@ -89,6 +127,7 @@ async function refresh() {
   renderTimeline(res.history);
   updateTodayHours(res.history);
   if (res.currentTask) taskInput.value = res.currentTask;
+  renderSettings(res.settings || clampSettings());
 }
 
 async function submit(unchanged) {
@@ -106,12 +145,44 @@ async function submit(unchanged) {
 
   const res = await chrome.runtime.sendMessage({ type: "submit-checkin", task, unchanged });
   if (!res?.ok) return setStatus("Save failed.", true);
-  setStatus("Saved.");
+  setStatus("Saved. Next popup set from now.");
   await refresh();
+}
+
+async function saveSettings() {
+  const settings = clampSettings({
+    intervalMinutes: intervalInput.value,
+    minuteOffset: minuteOffsetInput.value
+  });
+
+  intervalInput.value = settings.intervalMinutes;
+  minuteOffsetInput.value = settings.minuteOffset;
+
+  if (!hasChromeApi) {
+    setSettingsStatus("Preview mode only (load extension in Chrome).", true);
+    return;
+  }
+
+  const res = await chrome.runtime.sendMessage({ type: "save-settings", settings });
+  if (!res?.ok) {
+    setSettingsStatus("Failed to save settings.", true);
+    return;
+  }
+
+  setSettingsStatus("Timing updated.");
 }
 
 submitBtn.addEventListener("click", () => submit(false));
 sameBtn.addEventListener("click", () => submit(true));
+saveSettingsBtn.addEventListener("click", saveSettings);
+
+taskInput.addEventListener("keydown", (event) => {
+  if (event.key !== "Enter") return;
+  if (event.shiftKey) return;
+
+  event.preventDefault();
+  submit(false);
+});
 
 document.querySelectorAll(".tab").forEach((btn) => {
   btn.addEventListener("click", () => {
@@ -120,6 +191,7 @@ document.querySelectorAll(".tab").forEach((btn) => {
     const tab = btn.dataset.tab;
     document.getElementById("logsPanel").classList.toggle("active", tab === "logs");
     document.getElementById("timelinePanel").classList.toggle("active", tab === "timeline");
+    document.getElementById("settingsPanel").classList.toggle("active", tab === "settings");
   });
 });
 
