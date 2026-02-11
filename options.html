@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EveryHour Settings</title>
+    <style>
+      body { font-family: system-ui, sans-serif; margin: 24px; max-width: 760px; }
+      button { margin-right: 8px; padding: 8px 12px; }
+      pre { background: #f4f4f4; padding: 12px; max-height: 300px; overflow: auto; }
+    </style>
+  </head>
+  <body>
+    <h1>EveryHour Settings</h1>
+    <p>Export your check-in log for AI summaries, invoicing, or reporting.</p>
+    <button id="exportJson">Export JSON</button>
+    <button id="clearHistory">Clear History</button>
+    <p id="status"></p>
+    <pre id="preview"></pre>
+
+    <script src="options.js"></script>
+  </body>
+</html>
