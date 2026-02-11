@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="EveryHour icon">
+  <rect width="128" height="128" fill="#efefef"/>
+  <rect x="12" y="12" width="104" height="104" fill="#ffffff" stroke="#1f1f1f" stroke-width="4"/>
+  <rect x="28" y="34" width="72" height="10" fill="#1f1f1f"/>
+  <rect x="28" y="58" width="52" height="10" fill="#1f1f1f"/>
+  <rect x="28" y="82" width="84" height="10" fill="#1f1f1f"/>
+</svg>

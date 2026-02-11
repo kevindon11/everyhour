@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Worklog</title>
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Worklog</h1>
+      <div class="stats">
+        <span id="workedToday">Today: 0h</span>
+      </div>
+    </header>
+
+    <nav class="tabs">
+      <button class="tab active" data-tab="logs">Logs</button>
+      <button class="tab" data-tab="timeline">Timeline</button>
+    </nav>
+
+    <section id="logsPanel" class="panel active">
+      <div class="formCard">
+        <h2>What you're working on?</h2>
+        <textarea id="taskInput" rows="3" placeholder="bend2-ts: igualdade; vibe-coding ui for mvp"></textarea>
+        <div class="actions">
+          <button id="sameBtn" class="ghost">Still same</button>
+          <button id="submitBtn" class="solid">Send</button>
+        </div>
+      </div>
+
+      <p id="status" role="status" aria-live="polite"></p>
+
+      <ul id="logList" class="logList"></ul>
+    </section>
+
+    <section id="timelinePanel" class="panel">
+      <div class="timelineHeader">Daily activity blocks</div>
+      <div id="timelineRows" class="timelineRows"></div>
+    </section>
+
+    <script src="popup.js"></script>
+  </body>
+</html>

@@ -1,0 +1,167 @@
+:root {
+  font-family: "Courier New", Courier, monospace;
+}
+
+body {
+  margin: 0;
+  width: 420px;
+  background: #efefef;
+  color: #1f1f1f;
+}
+
+header {
+  padding: 8px 10px;
+  border-bottom: 1px solid #bdbdbd;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+h1 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.stats {
+  font-size: 12px;
+}
+
+.tabs {
+  display: flex;
+  gap: 0;
+  border-bottom: 1px solid #bdbdbd;
+}
+
+.tab {
+  border: none;
+  border-right: 1px solid #bdbdbd;
+  background: #f6f6f6;
+  padding: 8px 12px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 12px;
+}
+
+.tab.active {
+  background: #ffffff;
+  font-weight: 700;
+}
+
+.panel {
+  display: none;
+  padding: 10px;
+}
+
+.panel.active {
+  display: block;
+}
+
+.formCard {
+  border: 1px solid #bdbdbd;
+  background: #fff;
+  padding: 10px;
+}
+
+h2 {
+  margin: 0 0 8px;
+  font-size: 16px;
+}
+
+textarea {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid #bdbdbd;
+  padding: 8px;
+  font-family: inherit;
+  font-size: 12px;
+  resize: vertical;
+  background: #fafafa;
+}
+
+.actions {
+  margin-top: 8px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+button {
+  font-family: inherit;
+  font-size: 12px;
+}
+
+button.ghost {
+  border: 1px solid #8d8d8d;
+  background: #f7f7f7;
+  padding: 6px 10px;
+}
+
+button.solid {
+  border: 1px solid #2e6b3a;
+  background: #2f8a47;
+  color: #fff;
+  padding: 6px 12px;
+}
+
+#status {
+  margin: 8px 0;
+  min-height: 16px;
+  font-size: 12px;
+}
+
+.logList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid #d6d6d6;
+  max-height: 230px;
+  overflow: auto;
+}
+
+.logList li {
+  border-bottom: 1px solid #d6d6d6;
+  padding: 8px 2px;
+  font-size: 12px;
+}
+
+.logTime {
+  color: #555;
+}
+
+.timelineHeader {
+  font-size: 12px;
+  margin-bottom: 8px;
+}
+
+.timelineRows {
+  border: 1px solid #bdbdbd;
+  background: #fff;
+  padding: 8px;
+  display: grid;
+  gap: 6px;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 78px 1fr;
+  align-items: center;
+  gap: 8px;
+}
+
+.blocks {
+  height: 12px;
+  border: 1px solid #d8d8d8;
+  display: grid;
+  grid-template-columns: repeat(24, 1fr);
+  gap: 1px;
+  padding: 1px;
+}
+
+.block {
+  background: transparent;
+}
+
+.block.active {
+  background: #242424;
+}
